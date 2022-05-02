@@ -1,7 +1,11 @@
 import React from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import auth from '../../Firebase/firebase.init';
 
 const UploadProduct = () => {
 
+
+    const [user] = useAuthState(auth);
 
     const handleUpload = (event) => {
         event.preventDefault();
@@ -16,6 +20,7 @@ const UploadProduct = () => {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                'authorization': `${user.email} ${localStorage.getItem("accessToken")}`
             },
             body: JSON.stringify(product),
         })
